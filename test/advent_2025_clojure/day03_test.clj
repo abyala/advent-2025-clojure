@@ -14,4 +14,3 @@
   (are [expected input] (= expected (d/part2 input))
                         3121910778619 test-data
                         175304218462560 puzzle-data))
-
