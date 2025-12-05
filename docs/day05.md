@@ -132,11 +132,11 @@ a vector of ranges, ordered by the low value. As we add a new range into this ve
           a-outside? (> a (inc high))
           merge-next? (and low' (>= b low'))
           b-outside? (> b high)]
-      (cond (and a-outside? merge-next?) (recur (c/remove-at ranges (inc idx)) [a (max b high')])   ; 3
+      (cond (and a-outside? merge-next?) (recur (c/remove-at ranges (inc idx)) [a (max b high')])  ; 3
             a-outside? (c/insert-at ranges (inc idx) r)
             b-outside? (recur (c/remove-at ranges idx) [(min a low) (max b high)])
             :else (assoc ranges idx [(min a low) (max b high)])))
-    (let [[low' high'] (when (seq ranges) (first ranges))]
+    (let [[low' high'] (when (seq ranges) (first ranges))]                                         ; 4
       (if (and low' (>= b (dec low')))
         (recur (c/remove-at ranges 0) [a (max b high')])
         (c/insert-at ranges 0 r)))))
