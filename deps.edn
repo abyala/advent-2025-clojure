@@ -1,6 +1,6 @@
 {:deps
  {
-  io.github.abyala/advent-utils-clojure {:git/sha "5ac3d743253e3a3039b14e1c15b8a7bc80f32653"}
+  io.github.abyala/advent-utils-clojure {:git/sha "79e6f1e7365485c8c7bae0ceae87ca5168f2cca8"}
   org.clojure/data.priority-map {:mvn/version "1.2.0"}
   }
  }
