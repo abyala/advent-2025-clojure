@@ -80,3 +80,52 @@ return the remaining set.
 
 Finally, we solve part 2. After parsing the input, return the count of the full set of rolls, minus the count of rolls
 after removing the accessible ones.
+
+## Refactored
+
+Ok, I lied. I like having a single `solve` function and there were things I wanted to clean up. So let's refactor.
+
+First of all, I didn't like how `accessible-rolls` did two things - check if a roll was accessible for the forklift,
+and removed it from the set. So let's make a nice `accessible?` function.
+
+```clojure
+(defn accessible? [rolls p]
+  (< (c/count-when rolls (set (p/surrounding p))) 4))
+```
+
+So this is nice and easy to understand: take the set of points around a point `p`, and return whether the number of
+them in the set of rolls is below 4. Bonus - we get to use `count-when` again!
+
+Next, let's make a function `prune-accessible` to replace the old `accessible-rolls` function.
+
+```clojure
+(defn prune-accessible [remove-all? rolls]
+  (let [remaining (set (remove (partial accessible? rolls) rolls))]
+    (if (and remove-all? (not= rolls remaining))
+      (recur remove-all? remaining)
+      remaining)))
+```
+
+This time, we use the `remove` function over all of the accessible rolls passed in, and we introduce a function
+parameter `remove-all?` to state whether to remove rolls once or recursively. We recurse back through the function if
+the parameter says to do so and if the set of `rolls` is different from the set of `remaining` rolls after getting rid
+of the accessible ones. If we don't recurse or the set didn't change, return the remaining rolls.
+
+Now we can make our common function.
+
+```clojure
+(defn solve [remove-all? input]
+  (let [rolls (parse-rolls input)]
+    (- (count rolls) (count (prune-accessible remove-all? rolls)))))
+
+(defn part1 [input] (solve false input))
+(defn part2 [input] (solve true input))
+```
+
+`solve` pretty much does what the old `part2` did - parse the rolls, and return the difference between the original
+count and the number of ones leftover after pruning. `part1` calls it with `false` for `remove-all?` and `part2` calls
+it with `true`. Granted, we don't _really_ need to do that subtraction for part 1, and we could have structured the
+common function to return the number of rolls removed (I originally did that), but these functions seem more intuitive
+to me.
+
+Ahhhhh... I feel better now.
