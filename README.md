@@ -7,7 +7,7 @@
 | 3     | Lobby               | [blog](docs/day03.md) | [source](src/advent_2025_clojure/day03.clj) |
 | 4     | Printing Department | [blog](docs/day04.md) | [source](src/advent_2025_clojure/day04.clj) |
 | 5     | Cafeteria           | [blog](docs/day05.md) | [source](src/advent_2025_clojure/day05.clj) |
-| 6     |                     |                       |                                             |
+| 6     | Trash Compactor     | [blog](docs/day06.md) | [source](src/advent_2025_clojure/day06.clj) | 
 | 7     |                     |                       |                                             |
 | 8     |                     |                       |                                             |
 | 9     |                     |                       |                                             |
