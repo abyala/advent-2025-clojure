@@ -120,6 +120,10 @@ blank values since we don't need them anymore.
 
 So it's a little hard to read, but it's straightforward once you know what each step is doing.
 
+*UPDATE:* I read some solutions online and found a way to make this a bit easier to read. Instead of that last line of
+`(remove #(= % [nil]))`, you can just use `(take-nth 2)`. I forgot about that function, and it's just what we want -
+keep the sequences of numbers, drop the sequence of `nil`. That change along really improves readability.
+
 Now we're ready to finish, and the code is so simple to the original `part1` that we can go straight to the shared
 `solve` function.
 

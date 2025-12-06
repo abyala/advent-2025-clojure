@@ -21,7 +21,7 @@
          (partition-all (count padded))
          (map parse-blankable-long)
          (partition-by nil?)
-         (remove #(= % [nil])))))
+         (take-nth 2))))
 
 (defn solve [parse-fn input]
   (let [[num-str op-str] ((juxt butlast last) (str/split-lines input))]
