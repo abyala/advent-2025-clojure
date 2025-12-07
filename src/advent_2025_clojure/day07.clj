@@ -16,11 +16,13 @@
               n))]
     (move-down [beam] 0)))
 
-(def count-paths
-  (memoize (fn [grid beam]
-             (if-some [below (points-below grid beam)]
-               (c/sum (partial count-paths grid) below)
-               1))))
+(defn count-paths [grid beam]
+  (letfn [(move-down [beams]
+            (if-some [results (seq (mapcat (fn [[b n]] (map #(hash-map % n) (points-below grid b)))
+                                           beams))]
+              (recur (apply merge-with + results))
+              (c/sum second beams)))]
+    (move-down {beam 1} )))
 
 (defn solve [path-fn input]
   (let [grids (p/parse-to-char-coords-map input)

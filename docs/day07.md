@@ -108,3 +108,31 @@ We're going to skip over the naive `part2` function and create the unified `solv
 The `solve` function looks identical to the old `part1` function, except that once we parse the `grid` and find the
 `start` position, we parameterize which path function to apply. `part1` uses `count-splits` and `part2` uses
 `count-paths`. And that's it!
+
+## Refactoring
+
+Well it didn't take long to see online that there was a simpler way to do part 2 without needing to memoize anything.
+Since we only go to each level once, we just need to keep a running total at each depth of how many paths we could take
+to get to a beam, and then add those values as we split and move further down. So we can rewrite `count-paths` if we
+want, and I guess I have to admit I want.
+
+```clojure
+(defn count-paths [grid beam]
+  (letfn [(move-down [beams]
+            (if-some [results (seq (mapcat (fn [[b n]] (map #(hash-map % n) (points-below grid b)))
+                                           beams))]
+              (recur (apply merge-with + results))
+              (c/sum second beams)))]
+    (move-down {beam 1} )))
+```
+
+Once again, we have a `move-down` function, but this one takes in a map of `{beam num-paths}`, starting with one path to
+the starting beam. We do another `mapcat` over each `beam` like we saw in `count-splits`, but this time we calculate
+`points-below` each beam and turn that into a single-element hash-map of `{new-point num-paths}`. If this `mapcat`
+returns any values, then we recurse back into `move-down` by merging the sequence of maps together using
+`(apply merge-with + results)`, which combines the maps and, if it sees a collision, merges the results together. This
+keeps us from either a tree-recursive algorithm, or needing to rely on caching/memoization. When we hit the final row
+and `points-below` returns nothing, we just need `(c/sum second beams)` to take the final map of points and add up the
+number of paths to each point to get our answer.
+
+So yeah, that's cleaner. Thanks, Internet! Actually, thanks, Clojurian Slack!
