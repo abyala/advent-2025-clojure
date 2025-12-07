@@ -190,3 +190,34 @@ Wait... didn't I say I like reuse? Let's use our `c/sum` function for `part2` in
 
 Under the hood, it's still a call to `transduce`. But since we do so many of these in Advent puzzles, we can just sum
 the collection of `ranges` by applying the same subtraction function within. Simple to read.
+
+## Refactoring
+
+After reading [Todd Ginsberg's excellent solution](https://todd.ginsberg.com/post/advent-of-code/2025/day5/) in Kotlin,
+I realized I can greatly simplify the `merge-range` logic, eliminating a lot of conditionals, if we simply sort the
+sequence of ranges before merging. So let's see what that looks like by replacing `merge-range` with `merge-ranges` and
+refactoring `part2` accordingly:
+
+```clojure
+(defn merge-ranges [ranges]
+  (reduce (fn [acc [a b]] (let [[_ hi] (last acc)]
+                            (if (and hi (<= a (inc hi)))
+                              (update-in acc [(dec (count acc)) 1] max b)
+                              (conj acc [a b]))))
+          []
+          (sort ranges)))
+
+(defn part2 [input]
+  (c/sum (fn [[low high]] (- high low -1))
+         (merge-ranges (:ranges (parse-input input)))))
+```
+
+`merge-ranges` takes in all ranges from the input and calls `reduce` on them after sorting. Then as we work through
+each range, we look to see if the new range's low value (`a`) can be merged with the last accumulated value. If so, we
+call `update-in` to set the last accumulated `hi` value to be the max of its old value and the new `b`. If not, we
+simply `conj` the new range to the end of the accumulated vector.
+
+With that out of the way, `part1` looks mighty simple. We still use the same `c/sum` function, but we can use a
+single expression of `(merge-ranges (:ranges (parse-input input)))` to grab the ranges and merge them.
+
+Thanks, Todd! Nice improvement.
