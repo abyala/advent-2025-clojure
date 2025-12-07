@@ -8,7 +8,7 @@
 | 4     | Printing Department | [blog](docs/day04.md) | [source](src/advent_2025_clojure/day04.clj) |
 | 5     | Cafeteria           | [blog](docs/day05.md) | [source](src/advent_2025_clojure/day05.clj) |
 | 6     | Trash Compactor     | [blog](docs/day06.md) | [source](src/advent_2025_clojure/day06.clj) | 
-| 7     |                     |                       |                                             |
+| 7     | Laboratories        | [blog](docs/day07.md) | [source](src/advent_2025_clojure/day07.clj) |
 | 8     |                     |                       |                                             |
 | 9     |                     |                       |                                             |
 | 10    |                     |                       |                                             |
