@@ -9,7 +9,7 @@
 | 5     | Cafeteria           | [blog](docs/day05.md) | [source](src/advent_2025_clojure/day05.clj) |
 | 6     | Trash Compactor     | [blog](docs/day06.md) | [source](src/advent_2025_clojure/day06.clj) | 
 | 7     | Laboratories        | [blog](docs/day07.md) | [source](src/advent_2025_clojure/day07.clj) |
-| 8     |                     |                       |                                             |
+| 8     | Playground          | [blog](docs/day08.md) | [source](src/advent_2025_clojure/day08.clj) |                      |                                             |
 | 9     |                     |                       |                                             |
 | 10    |                     |                       |                                             |
 | 11    |                     |                       |                                             |
