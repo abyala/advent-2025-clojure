@@ -12,16 +12,6 @@
   (apply max (map (partial apply rectangle-area)
                   (c/unique-combinations (parse-points input)))))
 
-(defn follow-path [points]
-  (let [first-point (first (sort points))]
-    (loop [path [first-point], search (disj (set points) first-point), horizontal? true]
-      (if (seq search)
-        (let [dir-fn (if horizontal? first second)
-              path-ord (dir-fn (last path))
-              p' (c/first-when #(= path-ord (dir-fn %)) search)]
-          (recur (conj path p') (disj search p') (not horizontal?)))
-        (conj path (first path))))))
-
 (defn row-gaps [min-x max-x segments row]
   (->> (reduce (fn [[in-gap? found] [[x0] [x1]]]
                  [(not in-gap?) (if in-gap? (assoc-in found [(dec (count found)) 1] (dec x0))
@@ -32,7 +22,7 @@
        (remove (partial apply >=))))
 
 (defn gap-groups [points]
-  (let [path (follow-path points)
+  (let [path (conj (vec points) (first points))
         segments (->> (partition 2 1 path)
                       (map (partial sort-by (juxt first second)))
                       (sort-by (juxt first second)))

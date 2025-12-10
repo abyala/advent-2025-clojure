@@ -62,7 +62,8 @@ we'll look at the pairs of points that aren't on the same line, and return the l
 any of its rows.
 
 Let's start with `follow-path`, which takes in the collection of `points` and returns a sequence for the path we take to
-get around the polygon.
+get around the polygon. **UPDATE:** this function isn't needed, per the first refactoring below. But since I thought
+we needed it, I'm keeping it here for a record.
 
 ```clojure
 (defn follow-path [points]
@@ -179,3 +180,18 @@ all rectangles that overlap with gaps. Finally, for the remaining rectangles tha
 
 Whew! Quite a lot of code, and I'll bet there's a cleverer solution out there. But this is mine and I'm going to keep
 it... at least until some late night this week when I keep coding instead of sleeping.
+
+## Refactorings
+
+### Don't compute the path
+
+I didn't realize that the input data already lists the points in path order! So there's really no need for the
+`follow-paths` function at all. All we need to update is the start of the `gap-groups` function to call
+`(conj (vec points) (first points))` to make the list of points into a vector so we can attach the first point to 
+the end with `conj`.
+
+```clojure
+(defn gap-groups [points]
+  (let [path (conj (vec points) (first points))
+    ...))
+```
