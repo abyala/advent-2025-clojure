@@ -12,5 +12,5 @@
 | 8     | Playground          | [blog](docs/day08.md) | [source](src/advent_2025_clojure/day08.clj) |
 | 9     | Movie Theater       | [blog](docs/day09.md) | [source](src/advent_2025_clojure/day09.clj) | 
 | 10    |                     |                       |                                             |
-| 11    |                     |                       |                                             |
+| 11    | Reactor             | [blog](docs/day11.md) | [source](src/advent_2025_clojure/day11.clj) |
 | 12    |                     |                       |                                             |
